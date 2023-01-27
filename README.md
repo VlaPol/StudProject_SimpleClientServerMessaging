@@ -1,2 +1,1 @@
-# StudProject_SimpleClientServerMessaging
-scsm
+Simple study project. Realize client-server messaging
