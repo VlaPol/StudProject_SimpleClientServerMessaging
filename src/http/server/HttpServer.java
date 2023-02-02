@@ -7,19 +7,29 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HttpServer {
 
+    private final ExecutorService pool;
     private final int port;
+    private boolean stopped;
 
-    public HttpServer(int port) {
+    public HttpServer(int port, int poolSize) {
         this.port = port;
+        this.pool = Executors.newFixedThreadPool(poolSize);
     }
 
     public void run() {
-        try (var server = new ServerSocket(port)) {
-            var socket = server.accept();     // accept connection from client. Blocking method!
-            processSocket(socket);
+        try {
+            var server = new ServerSocket(port);
+
+            while (!stopped) {
+                var socket = server.accept();     // accept connection from client. Blocking method!
+                System.out.println("Socked accepted");
+                pool.submit(() -> processSocket(socket));       // work with thread in the another thread
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -31,8 +41,9 @@ public class HttpServer {
              var inputStream = new DataInputStream(socket.getInputStream());
              var outStream = new DataOutputStream(socket.getOutputStream())) {
 // request handler
-            System.out.println("Request: " + new String(inputStream.readNBytes(600)));
+            System.out.println("Request: " + new String(inputStream.readNBytes(1000)));
 
+            Thread.sleep(10000);            // for stopping thread
 // response handler;
             var body = Files.readAllBytes(Path.of("resources", "example.html"));
             var headers = """
@@ -46,8 +57,14 @@ public class HttpServer {
         } catch (IOException e) {
             // here should be error logger
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
 
 
+    }
+
+    public void setStopped(boolean stopped){
+        this.stopped = stopped;
     }
 }
