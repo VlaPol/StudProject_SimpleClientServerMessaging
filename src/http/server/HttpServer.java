@@ -26,9 +26,9 @@ public class HttpServer {
             var server = new ServerSocket(port);
 
             while (!stopped) {
-                var socket = server.accept();     // accept connection from client. Blocking method!
+                var socket = server.accept();     // Blocking method!
                 System.out.println("Socked accepted");
-                pool.submit(() -> processSocket(socket));       // work with thread in the another thread
+                pool.submit(() -> processSocket(socket));
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -43,19 +43,18 @@ public class HttpServer {
 // request handler
             System.out.println("Request: " + new String(inputStream.readNBytes(400)));
 
-            Thread.sleep(10000);            // for stopping thread
+            Thread.sleep(10000);
 // response handler;
             var body = Files.readAllBytes(Path.of("resources", "example.html"));
             var headers = """
                     HTTP/1.1 200 OK
-                    content-type: text/html
-                    content-length: %s
+                    Content-Type: text/html
+                    Content-Length: %s
                     """.formatted(body.length).getBytes();
             outStream.write(headers);
             outStream.write(System.lineSeparator().getBytes());
             outStream.write(body);
         } catch (IOException e) {
-            // here should be error logger
             e.printStackTrace();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -64,7 +63,7 @@ public class HttpServer {
 
     }
 
-    public void setStopped(boolean stopped){
+    public void setStopped(boolean stopped) {
         this.stopped = stopped;
     }
 }

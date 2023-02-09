@@ -20,12 +20,21 @@ public class FirstServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        var parametr = req.getParameter("param");
+        var parametrList = req.getParameterMap();
+
         resp.setContentType("text/html");
         resp.setCharacterEncoding(StandardCharsets.UTF_8.name());
         resp.setHeader("token", "12345");
         try (var writer = resp.getWriter()) {
             writer.write("Hello from first Servlet");
         }
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        var parametrList = req.getParameterMap();
     }
 
     @Override
