@@ -1,1 +1,1 @@
-Simple study project. Realize client-server messaging
+Stud project for understanding servlets
