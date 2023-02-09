@@ -41,7 +41,7 @@ public class HttpServer {
              var inputStream = new DataInputStream(socket.getInputStream());
              var outStream = new DataOutputStream(socket.getOutputStream())) {
 // request handler
-            System.out.println("Request: " + new String(inputStream.readNBytes(1000)));
+            System.out.println("Request: " + new String(inputStream.readNBytes(400)));
 
             Thread.sleep(10000);            // for stopping thread
 // response handler;
