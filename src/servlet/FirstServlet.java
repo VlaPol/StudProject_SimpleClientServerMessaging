@@ -19,7 +19,7 @@ public class FirstServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         var parametr = req.getParameter("param");
         var parametrList = req.getParameterMap();
@@ -33,13 +33,13 @@ public class FirstServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         // send params in URL
         //var parametrList = req.getParameterMap();
 
         // send body from client
         try (var reader = req.getReader(); // getInputStream() for binary
-            var lines = reader.lines()){
+             var lines = reader.lines()) {
             lines.forEach(System.out::println);
         }
     }
