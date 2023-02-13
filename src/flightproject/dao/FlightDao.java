@@ -22,6 +22,7 @@ public class FlightDao implements Dao<Long, Flight>{
 
     @Override
     public List<Flight> findAll() {
+
         try(var connection = ConnectionManager.get()){
 
             var preparedStatement = connection.prepareStatement(FIND_ALL);
@@ -31,10 +32,10 @@ public class FlightDao implements Dao<Long, Flight>{
             while(resultSet.next()){
                 flightList.add(buildFlight(resultSet));
             }
+            return flightList;
         }catch(SQLException e){
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class FlightDao implements Dao<Long, Flight>{
                 resultSet.getObject("departure_airport_code", String.class),
                 resultSet.getObject("arrival_date", Timestamp.class).toLocalDateTime(),
                 resultSet.getObject("arrival_airport_code", String.class),
-                resultSet.getObject("aircraft_id", Long.class),
+                resultSet.getObject("aircraft_id", Integer.class),
                 FlightStatus.valueOf(resultSet.getObject("status", String.class))
         );
     }

@@ -9,6 +9,19 @@ public final class ConnectionManager {
     private static final String URL_KEY = "db.url";
     private static final String USER_KEY = "db.user";
     private static final String PASSWORD_KEY = "db.password";
+    private static final String MSSQL_DRIVER = "com.mysql.cj.jdbc.Driver";
+
+    static{
+        loadDriver();
+    }
+
+    private static void loadDriver() {
+        try {
+            Class.forName(MSSQL_DRIVER);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private ConnectionManager() {
     }
