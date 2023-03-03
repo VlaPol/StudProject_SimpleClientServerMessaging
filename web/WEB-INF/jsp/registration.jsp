@@ -5,7 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="/registration" method="post">
+
+<img width="150" height="150" src="${pageContext.request.contextPath}/images/users/1675177185878.jpg" alt="User image">
+<%--<audio src=""></audio>--%>
+<%--<video src=""></video>--%>
+
+<%--  enctype="multipart/form-data" added for pass immage to server      --%>
+    <form action="${pageContext.request.contextPath}/registration" method="post" enctype="multipart/form-data">
         <label for="userName"> Name:
             <input type="text" name="name" id="userName">
         </label>
@@ -14,6 +20,10 @@
             <input type="date" name="birthday" id="bDay">
         </label>
         <br><br>
+        <label for="imageId"> Image:
+            <input type="file" name="image" id="imageId">
+        </label>
+        <br>
         <label for="mail"> email:
             <input type="text" name="email" id="mail">
         </label>
