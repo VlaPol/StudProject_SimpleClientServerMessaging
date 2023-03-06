@@ -20,7 +20,7 @@ import java.util.List;
  file more than 1024*1024 will stored on disk
  */
 @MultipartConfig(fileSizeThreshold = 1024*1024)
-@WebServlet("/registration")
+@WebServlet(value = "/registration", name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
