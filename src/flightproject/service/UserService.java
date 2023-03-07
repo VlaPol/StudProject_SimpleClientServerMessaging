@@ -2,11 +2,16 @@ package flightproject.service;
 
 import flightproject.dao.UserDao;
 import flightproject.dto.CreateUserDto;
+import flightproject.dto.UserDto;
+import flightproject.entity.User;
 import flightproject.exception.ValidationException;
 import flightproject.mapper.CreateUserMapper;
+import flightproject.mapper.UserMapper;
 import flightproject.validator.CreateUserValidator;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
+
+import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -18,8 +23,14 @@ public class UserService {
     private final CreateUserValidator createUserValidator = CreateUserValidator.getInstance();
     private final UserDao userDao = UserDao.getInstance();
     private final CreateUserMapper createUserMapper = CreateUserMapper.getInstance();
+    private final UserMapper userMapper = UserMapper.getInstance();
     private final ImageService imageService = ImageService.getInstance();
 
+
+    public Optional<UserDto> login(String email, String password){
+       return userDao.findByEmailAndPassword(email, password)
+               .map(userMapper::mapFrom);
+    }
 
     @SneakyThrows
     public Integer create(CreateUserDto userDto) {
