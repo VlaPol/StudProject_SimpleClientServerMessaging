@@ -3,6 +3,7 @@ package flightproject.servlets;
 import flightproject.dto.UserDto;
 import flightproject.service.UserService;
 import flightproject.util.JspHelper;
+import flightproject.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +13,7 @@ import lombok.SneakyThrows;
 
 import java.io.IOException;
 
-@WebServlet("/login")
+@WebServlet(UrlPath.LOGIN)
 public class LoginServlet extends HttpServlet {
 
     public final UserService userService = UserService.getInstance();

@@ -4,6 +4,7 @@ import flightproject.dto.CreateUserDto;
 import flightproject.exception.ValidationException;
 import flightproject.service.UserService;
 import flightproject.util.JspHelper;
+import flightproject.util.UrlPath;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +21,7 @@ import java.util.List;
  file more than 1024*1024 will stored on disk
  */
 @MultipartConfig(fileSizeThreshold = 1024*1024)
-@WebServlet(value = "/registration", name = "RegistrationServlet")
+@WebServlet(value = UrlPath.REGISTRATION, name = "RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
     private final UserService userService = UserService.getInstance();
